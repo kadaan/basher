@@ -29,7 +29,7 @@ script:
     docker run -it bash:${BASHVER} --version
     time docker run -it basher/basher:bash-${BASHVER} --tap /opt/basher/tests
   else
-    if [[ "$TRAVIS_OS_NAME" == 'darwin' ]]; then
+    if [[ "$TRAVIS_OS_NAME" == 'osx' ]]; then
       brew uninstall --force coreutils
     fi
     realpath --help
