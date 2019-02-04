@@ -29,6 +29,9 @@ script:
     docker run -it bash:${BASHVER} --version
     time docker run -it basher/basher:bash-${BASHVER} --tap /opt/basher/tests
   else
+    if [[ "$TRAVIS_OS_NAME" == 'darwin' ]]; then
+      brew uninstall --force coreutils
+    fi
     realpath --help
     readlink --help
     git config --global user.email "user@example.com"
