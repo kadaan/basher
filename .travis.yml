@@ -4,16 +4,16 @@ os:
 - linux
 
 env:
-  - SHELLVER=
-  - SHELLVER=SH
-  - SHELLVER=DASH
-  - SHELLVER=ZSH
-  - SHELLVER=BASH_3.2
-  - SHELLVER=BASH_4.0
-  - SHELLVER=BASH_4.1
-  - SHELLVER=BASH_4.2
-  - SHELLVER=BASH_4.3
-  - SHELLVER=BASH_4.4
+  - BASHER_SHELL=
+  - BASHER_SHELL=SH
+  - BASHER_SHELL=DASH
+  - BASHER_SHELL=ZSH
+  - BASHER_SHELL=BASH_3.2
+  - BASHER_SHELL=BASH_4.0
+  - BASHER_SHELL=BASH_4.1
+  - BASHER_SHELL=BASH_4.2
+  - BASHER_SHELL=BASH_4.3
+  - BASHER_SHELL=BASH_4.4
 
 matrix:
   include:
@@ -27,25 +27,12 @@ script:
   wget --no-check-certificate -O bats.tar.gz https://github.com/bats-core/bats-core/archive/v1.1.0.tar.gz
   mkdir bats
   tar --strip-components=1 -xzf bats.tar.gz -C bats
-  if [[ "$TRAVIS_OS_NAME" == 'linux' && -n "$SHELLVER" ]]; then
+  if [[ "$TRAVIS_OS_NAME" == 'linux' && -n "$BASHER_SHELL" ]]; then
     tag=""
-    if [[ ${SHELLVER} == BASH_* ]]; then
-      bash_version="${SHELLVER##bash_}"
-      tag=basher/basher:bash-${bash_version}
-      docker build --build-arg bashver=${bash_version} --tag $tag docker/bash
-    elif [[ "$SHELLVER" == "SH" ]]; then
-      tag=basher/basher:sh
-      docker build --build-arg shell=sh --tag $tag docker/sh
-    elif [[ "$SHELLVER" == "DASH" ]]; then
-      tag=basher/basher:dash
-      docker build --build-arg shell=dash --tag $tag docker/sh
-    elif [[ "$SHELLVER" == "ZSH" ]]; then
-      tag=basher/basher:zsh
-      docker build --build-arg shell=zsh --tag $tag docker/zsh
-    else
-      echo "Unsupported shell version: $SHELLVER" 1>&2
-      exit 1
-    fi
+    shell="echo "${BASHER_SHELL%%_*}" | tr '[:upper:]' '[:lower:]'"
+    version="${BASHER_SHELL##*_}"
+    tag=basher/basher:${shell}-${version}
+    docker build --build-arg ${shell}ver=${version} --tag $tag docker/${shell}
     time docker run -it $tag --tap /opt/basher/tests
   else
     if [[ "$TRAVIS_OS_NAME" == 'osx' ]]; then

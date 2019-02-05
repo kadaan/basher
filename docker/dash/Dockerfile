@@ -6,4 +6,4 @@ git config --global user.name "User Name";
 
 COPY . /opt/basher/
 
-ENTRYPOINT ["/bin/sh", "/opt/basher/bats/bin/bats"]
+ENTRYPOINT ["/bin/dash", "/opt/basher/bats/bin/bats"]
