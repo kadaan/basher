@@ -35,7 +35,7 @@ script:
       version="latest"
     fi
     tag=basher/basher:${shell}-${version}
-    docker build --build-arg ${shell}ver=${version} --tag $tag docker/${shell}
+    docker build --build-arg ${shell}ver=${version} --tag $tag -f docker/${shell}/Dockerfile .
     time docker run -it $tag --tap /opt/basher/tests
   else
     if [[ "$TRAVIS_OS_NAME" == 'osx' ]]; then
