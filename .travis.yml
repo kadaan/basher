@@ -46,7 +46,6 @@ script:
       echo "Unsupported shell version: $SHELLVER" 1>&2
       exit 1
     fi
-    docker run -it $tag --version
     time docker run -it $tag --tap /opt/basher/tests
   else
     if [[ "$TRAVIS_OS_NAME" == 'osx' ]]; then
