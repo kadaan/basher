@@ -32,21 +32,21 @@ script:
     if [[ ${SHELLVER} == BASH_* ]]; then
       bash_version="${SHELLVER##bash_}"
       tag=basher/basher:bash-${bash_version}
-      docker build --build-arg bashver=${bash_version} --tag $tag Dockerfile.bash
-      docker run -it bash:${BASHVER} --version
+      docker build --build-arg bashver=${bash_version} --tag $tag docker/bash
     elif [[ "$SHELLVER" == "SH" ]]; then
       tag=basher/basher:sh
-      docker build --build-arg shell=sh --tag $tag Dockerfile.sh
+      docker build --build-arg shell=sh --tag $tag docker/sh
     elif [[ "$SHELLVER" == "DASH" ]]; then
       tag=basher/basher:dash
-      docker build --build-arg shell=dash --tag $tag Dockerfile.sh
+      docker build --build-arg shell=dash --tag $tag docker/sh
     elif [[ "$SHELLVER" == "ZSH" ]]; then
       tag=basher/basher:zsh
-      docker build --build-arg shell=zsh --tag $tag Dockerfile.sh
+      docker build --build-arg shell=zsh --tag $tag docker/zsh
     else
       echo "Unsupported shell version: $SHELLVER" 1>&2
       exit 1
     fi
+    docker run -it $tag --version
     time docker run -it $tag --tap /opt/basher/tests
   else
     if [[ "$TRAVIS_OS_NAME" == 'osx' ]]; then
