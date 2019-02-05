@@ -38,8 +38,6 @@ script:
     if [[ "$TRAVIS_OS_NAME" == 'osx' ]]; then
       brew uninstall --force coreutils
     fi
-    realpath --help
-    readlink --help
     git config --global user.email "user@example.com"
     git config --global user.name "User Name"
     time bats/bin/bats --tap tests

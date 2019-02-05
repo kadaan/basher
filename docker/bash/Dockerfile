@@ -8,4 +8,4 @@ git config --global user.name "User Name";
 
 COPY . /opt/basher/
 
-ENTRYPOINT ["/bin/bash", "/opt/basher/bats/bin/bats"]
+ENTRYPOINT ["/usr/local/bin/bash", "/opt/basher/bats/bin/bats"]
