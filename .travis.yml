@@ -31,6 +31,9 @@ script:
     tag=""
     shell="$(echo "${BASHER_SHELL%%_*}" | tr '[:upper:]' '[:lower:]')"
     version="${BASHER_SHELL##*_}"
+    if [[ "$version" == "BASHER_SHELL" ]]; then
+      version="latest"
+    fi
     tag=basher/basher:${shell}-${version}
     docker build --build-arg ${shell}ver=${version} --tag $tag docker/${shell}
     time docker run -it $tag --tap /opt/basher/tests
