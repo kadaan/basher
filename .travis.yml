@@ -31,7 +31,7 @@ script:
     tag=""
     shell="$(echo "${BASHER_SHELL%%_*}" | tr '[:upper:]' '[:lower:]')"
     version="${BASHER_SHELL##*_}"
-    if [[ "$version" == "BASHER_SHELL" ]]; then
+    if [[ "$version" == "$BASHER_SHELL" ]]; then
       version="latest"
     fi
     tag=basher/basher:${shell}-${version}
