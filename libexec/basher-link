@@ -7,6 +7,8 @@ set -e
 resolve_link() {
   if type -p realpath >/dev/null; then
     realpath "$1"
+  elif type -p greadlink >/dev/null; then
+    greadlink -f "$1"
   else
     readlink -f "$1"
   fi
